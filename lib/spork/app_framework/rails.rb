@@ -95,8 +95,10 @@ class Spork::AppFramework::Rails < Spork::AppFramework
     end
 
     def delay_eager_view_loading
-      puts "Enabling eager view loading\n"
-      return
+      if ENV['RAILS_ENV'] == 'cucumber'
+        puts "Enabling eager view loading\n"
+        return
+      end
       # So, in testing mode it seems it would be optimal to not eager load
       # views (as your may only run a test that uses one or two views).
       # However, I decided to delay eager loading rather than force it to
